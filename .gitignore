@@ -12,3 +12,11 @@ storage/
 .env.php
 .env
 .env.example
+/vendor
+/node_modules
+/public/storage
+Homestead.yaml
+Homestead.json
+.env
+bootstraps/cache/
+storage/
