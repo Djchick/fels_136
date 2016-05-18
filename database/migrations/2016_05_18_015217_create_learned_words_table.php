@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateLearnedWordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,10 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('learned_words', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 50);
-            $table->string('email', 100)->unique();
-            $table->string('password', 100);
-            $table->string('avatar', 100);
-            $table->rememberToken();
-            $table->tinyInteger('role')->default(1);;
+            $table->integer('word_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +28,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::drop('learned_words');
     }
 }
