@@ -30,4 +30,9 @@ return [
     'update' => 'Update',
     'delete' => 'Delete',
     'edit' => 'Edit',
+    'change_password'=> 'Change password',
+    'current_password'=>"Current password",
+    'new_password' =>'New password',
+    'save'=>"Save",
+    'new_password_confirmation'=>'New password confirmation',
 ];

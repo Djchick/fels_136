@@ -80,6 +80,7 @@ return [
     'timezone'             => 'Trường :attribute phải là một múi giờ hợp lệ.',
     'unique'               => 'Trường :attribute đã có trong CSDL.',
     'url'                  => 'Trường :attribute không giống với định dạng một URL.',
+    'password_hash_check'       => 'Trường :attribute không khớp mật khẩu.',
 
     /*
     |--------------------------------------------------------------------------

@@ -12,6 +12,7 @@ storage/
 .env.php
 .env
 .env.example
+.composer.lock
 /vendor
 /node_modules
 /public/storage

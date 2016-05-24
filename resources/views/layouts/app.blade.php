@@ -27,7 +27,6 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ route('home') }}">{{ trans('user/titles.home') }}</a></li>
                 </ul>
-
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->    
@@ -39,9 +38,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
-
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('auth/logout') }}"><i class="fa fa-btn fa-user"></i>{{ trans('user/labels.user_info') }}</a></li>
+                            <li><a href="{{ route('user.info') }}"><i class="fa fa-btn fa-user"></i>{{ trans('user/labels.user_info') }}</a></li>
                             <li><a href="{{ url('auth/logout') }}"><i class="fa fa-btn fa-sign-out"></i>{{ trans('user/labels.logout') }}</a></li>
                         </ul>
                         </li>
