@@ -20,3 +20,6 @@ Homestead.json
 .env
 bootstraps/cache/
 storage/
+public/css
+public/js
+public/bower

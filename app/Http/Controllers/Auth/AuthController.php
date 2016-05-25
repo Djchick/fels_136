@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use Validator;
+use Illuminate\Contracts\Auth\Guard;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -20,23 +24,21 @@ class AuthController extends Controller
     | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
-
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
     /**
      * Where to redirect users after login / registration.
      *
      * @var string
      */
     protected $redirectTo = '/';
-
     /**
      * Create a new authentication controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Guard $auth)
     {
+        $this->auth = $auth;
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
@@ -46,12 +48,15 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
     protected function validator(array $data)
     {
+        $rule = config('common.user.rule');
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'name' => "required|max:{$rule['name_max']}",
+            'email' => "required|email|max:{$rule['email_max']}|unique:users,email,NULL,id,deleted_at,NULL",
+            'password' => "required|confirmed|min:{$rule['password_min']}",
+            'password_confirmation' => "required|min:{$rule['password_min']}",
         ]);
     }
 
@@ -61,12 +66,33 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
+
     protected function create(array $data)
     {
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => $data['password'],
         ]);
+    }
+
+    public function getRegister ()
+    {
+        return view('auth.register');
+    }
+
+    public function getLogin ()
+    {
+        return view('auth.login');
+    }
+
+    public function postLogin (LoginRequest $request) {
+        $loginUser = [
+            'email'     => $request->email,
+            'password'  => $request->password,
+        ];
+        if ($this->auth->attempt($loginUser)) {
+            return redirect()->route('home');
+        }
     }
 }
