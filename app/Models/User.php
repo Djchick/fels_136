@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 use Hash;
 
 class User extends Authenticatable
@@ -30,11 +31,11 @@ class User extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
-    public function activity() {
+    public function activities() {
         return $this->hasMany(Activity::class);
     }
 
-    public function category() {
+    public function categories() {
         return $this->belongsToMany(Category::class);
     }
     
@@ -53,4 +54,5 @@ class User extends Authenticatable
         $rule = config('common.user.rule');
         return $this->role == $rule['role_admin'];
     }
+
 }

@@ -21,12 +21,8 @@ Route::post('login', ['as' => 'postLogin', 'uses' => 'Auth\AuthController@postLo
 Route::get('auth/logout', 'Auth\AuthController@logout');
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::resource('user', 'UserController', [
-        'only'  => [
-            'index', 
-            'show', 
-            'edit', 
-            'update',
-        ],
-    ]);
+    Route::resource('user', 'UserController');
+    Route::get('user-info', ['as' => 'user.info', 'uses' => 'HomeController@getInfo']);
+    Route::get('change-password', ['as' => 'user.getChangePassword', 'uses' => 'UserController@getChangePassword']);
+    Route::post('change-password', ['as' => 'user.postChangePassword', 'uses' => 'UserController@postChangePassword']);
 });

@@ -12,14 +12,24 @@
     </div>
     @else
     <div id="wrapper">
-        @include('layouts.sidebar')
+        <!-- Navigation -->
+        <div class="content_page">
+            @include('layouts.sidebar')
+        </div>
+
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <h3 class="page-header">{{ trans('user/messages.wellcome_user') }}  {{ Auth::user()->name }}</h3>
-                        <h4>{{ trans('user/messages.introduce') }}</h4>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                    <div class="col-lg-12">
+                        {{ trans('user/labels.email_info') }} {{ Auth::user()->email }}
+                    </div>
+                    <div class="col-lg-12">
+                        <a href="{!! route('user.getChangePassword') !!}">{{ trans('user/labels.change_password') }}</a>
                     </div>
                 </div>
                 <!-- /.row -->
