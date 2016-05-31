@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{ trans('user/labels.login') }}
+    {{ trans('user/labels.update_user') }}
 @stop
 @section('content')
     <div id="wrapper">
@@ -22,7 +22,7 @@
                     <!-- /.col-lg-12 -->
                     <div class="col-lg-7">
                         @include('errors.errors')
-                        {!! Form::open(['route' => ['user.update', $editUser['id']], 'method' => 'PUT']) !!}
+                        {!! Form::open(['route' => ['admin.user.update', $editUser['id']], 'method' => 'PUT']) !!}
                             <div class="form-group">
                                 {!! Form::label('name', trans('user/labels.name'), ['class' => 'required']) !!}
                                 {!! Form::text('name', old('name', isset($editUser) ? $editUser['name'] : null), ['class' => 'form-control', 'placeholder' => trans('user/placeholders.name')]) !!}

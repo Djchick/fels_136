@@ -21,7 +21,7 @@
                     </div>
                     <!-- /.col-lg-12 -->
                     <div class="col-lg-7">
-                        {!! Form::open(['route' => 'user.store', 'method' => 'POST']) !!}
+                        {!! Form::open(['route' => 'admin.user.store', 'method' => 'POST']) !!}
                             @include('errors.errors')
                             <div class="form-group">
                                 {!! Form::label('name', trans('user/labels.name'), ['class' => 'required']) !!}

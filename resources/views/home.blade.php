@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{ trans('user/labels.login') }}
+    {{ trans('user/labels.home') }}
 @stop
 @section('content')
     @if (Auth::guest())

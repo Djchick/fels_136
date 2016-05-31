@@ -56,16 +56,37 @@ class UserController extends Controller
     }
 
     public function update(UserRequest $request, $id) {
-        $input = $request->only(['name', 'email']);
+        $input = $request->only(['name', 'email', 'password']);
         $updateUser = $this->userRepository->find($id);
         $updateUser->update($input);
-        return redirect()->route('user.edit', $id)->withMessage(trans('user/messages.update_complete'));
+        return redirect()->route('admin.user.edit', $id)->withMessage(trans('user/messages.update_complete'));
     }
 
     public function destroy($id) {
         $user = $this->userRepository->find($id);
         $user->delete($id);
         return redirect()->route('user.index')->withMessage(trans('user/messages.delete_complete'));
+    }
+
+    public function getUpdateProfile() {
+        $editUser = Auth::user();
+        $this->viewData = [
+            'editUser' => $editUser,
+        ];
+        return view('user.update_profile', $this->viewData);
+    }
+
+    public function postUpdateProfile(UserRequest $request) {
+        $editUser   = Auth::user();
+        $updateUser = $this->userRepository->find($editUser->id);
+        $update     = $updateUser->update($request->only([
+            'name',
+            'email',
+        ]));
+        if($update) {
+            return redirect()->route('user.getUpdateProfile')->withMessage(trans('user/messages.update_complete'));
+        }
+        return redirect()->route('user.getUpdateProfile')->withErrors(trans('user/messages.common_error'));
     }
 
     public function getChangePassword() {

@@ -9,4 +9,14 @@ return [
             'role_admin' => 2,
         ],
     ],
+    'cate' => [
+        'rule' => [
+            'name_max' => 100,
+        ],
+    ],
+    'lesson' => [
+        'rule' => [
+            'name_max' => 100,
+        ],
+    ],
 ]; 

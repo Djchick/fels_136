@@ -46,7 +46,7 @@
                                     {{ trans('user/labels.role_admin') }}
                                     @endif
                                 </td>
-                                {!! Form::open(['route' => ['user.destroy', $item_user['id']], 'method' => 'DELETE']) !!}
+                                {!! Form::open(['route' => ['admin.user.destroy', $item_user['id']], 'method' => 'DELETE']) !!}
                                 <td class="center">
                                     {{ Form::button("<i class=\"fa fa-trash-o  fa-fw\"></i>", [
                                         'class' => 'btn btn-danger',
@@ -56,7 +56,7 @@
                                 </td>
                                 {!! Form::close() !!}
                                 <td class="center">
-                                    <i class="fa fa-pencil fa-fw"></i> <a href="{!! route('user.edit', $item_user['id']) !!}">{{ trans('user/labels.field_edit') }}</a>
+                                    <i class="fa fa-pencil fa-fw"></i> <a href="{!! route('admin.user.edit', $item_user['id']) !!}">{{ trans('user/labels.field_edit') }}</a>
                                 </td>
                             </tr>
                             @endforeach

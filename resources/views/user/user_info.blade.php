@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{ trans('user/labels.login') }}
+    {{ trans('user/labels.user_info') }}
 @stop
 @section('content')
     @if (Auth::guest())
@@ -27,6 +27,9 @@
                     <!-- /.col-lg-12 -->
                     <div class="col-lg-12">
                         {{ trans('user/labels.email_info') }} {{ Auth::user()->email }}
+                    </div>
+                    <div class="col-lg-12">
+                        <a href="{!! route('user.getUpdateProfile') !!}">{{ trans('user/labels.page_edit_member') }}</a>
                     </div>
                     <div class="col-lg-12">
                         <a href="{!! route('user.getChangePassword') !!}">{{ trans('user/labels.change_password') }}</a>
