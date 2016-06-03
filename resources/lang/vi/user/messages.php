@@ -10,4 +10,6 @@ return [
     'create_complete' => 'Thêm thành viên thành công !!!',
     'role_user' => '1',
     'role_admin' => '2',
+    'user_not_found' => 'Người dùng không tồn tại',
+    'common_error' => 'Update không thành công !!'
 ];

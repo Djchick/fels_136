@@ -11,8 +11,9 @@
 |
 */
 
-Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
+
+Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 Route::get('register', ['as' => 'getRegister', 'uses' => 'Auth\AuthController@getRegister']);
 Route::post('register', 'Auth\AuthController@postRegister');
 
@@ -20,9 +21,22 @@ Route::get('login', ['as' => 'getLogin', 'uses' => 'Auth\AuthController@getLogin
 Route::post('login', ['as' => 'postLogin', 'uses' => 'Auth\AuthController@postLogin']);
 Route::get('auth/logout', 'Auth\AuthController@logout');
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['prefix'=>'admin', 'middleware' => ['auth','admin']], function(){
+
     Route::resource('user', 'UserController');
-    Route::get('user-info', ['as' => 'user.info', 'uses' => 'HomeController@getInfo']);
-    Route::get('change-password', ['as' => 'user.getChangePassword', 'uses' => 'UserController@getChangePassword']);
-    Route::post('change-password', ['as' => 'user.postChangePassword', 'uses' => 'UserController@postChangePassword']);
+    Route::resource('category', 'CategoryController');
+   
 });
+
+Route::resource('category', 'CategoryController', ['only'  => [
+    'index',
+]]);
+Route::resource('user', 'UserController', ['only'  => [
+    'index',
+]]);
+
+Route::get('user-info', ['as' => 'user.info', 'uses' => 'HomeController@getInfo']);
+Route::get('user-profile', ['as' => 'user.getUpdateProfile', 'uses' => 'UserController@getUpdateProfile']);
+Route::post('user-profile', ['as' => 'user.postUpdateProfile', 'uses' => 'UserController@postUpdateProfile']);
+Route::get('change-password', ['as' => 'user.getChangePassword', 'uses' => 'UserController@getChangePassword']);
+Route::post('change-password', ['as' => 'user.postChangePassword', 'uses' => 'UserController@postChangePassword']);

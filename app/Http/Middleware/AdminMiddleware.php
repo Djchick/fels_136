@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class AdminMiddleware
 {
@@ -13,12 +14,11 @@ class AdminMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
-        if (Auth::check() && Auth::user()->isAdmin()) {
+    public function handle($request, Closure $next) {
+        if(Auth::check() && Auth::user()->isAdmin()) {
             return $next($request);
         }
-
-        return redirect('home');
+        
+        return response('Unauthorized.', 401);
     }
 }

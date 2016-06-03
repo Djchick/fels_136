@@ -29,7 +29,7 @@
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->    
+                    <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">{{ trans('user/labels.login') }}</a></li>
                         <li><a href="{{ url('/register') }}">{{ trans('user/labels.register') }}</a></li>

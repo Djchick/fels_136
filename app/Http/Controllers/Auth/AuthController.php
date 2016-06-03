@@ -94,5 +94,6 @@ class AuthController extends Controller
         if ($this->auth->attempt($loginUser)) {
             return redirect()->route('home');
         }
+        return redirect()->route('getLogin')->withMessage(trans('user/messages.user_not_found'));
     }
 }

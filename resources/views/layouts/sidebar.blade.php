@@ -9,7 +9,7 @@
                         <a href="{{ URL::to('user') }}">{{ trans('user/titles.user_list') }}</a>
                     </li>
                     <li>
-                        <a href="{{ URL::to('user/create') }}">{{ trans('user/titles.add_user') }}</a>
+                        <a href="{{ URL::to('admin/user/create') }}">{{ trans('user/titles.add_user') }}</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -18,10 +18,10 @@
                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> {{ trans('user/titles.category') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">{{ trans('user/titles.list_category') }}</a>
+                        <a href="{{ URL::to('category') }}">{{ trans('category/labels.list_category') }}</a>
                     </li>
                     <li>
-                        <a href="#">{{ trans('user/titles.add_category') }}</a>
+                        <a href="{{ URL::to('admin/category/create') }}">{{ trans('category/labels.add_category') }}</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -30,10 +30,10 @@
                 <a href="#"><i class="fa fa-cube fa-fw"></i> {{ trans('user/titles.lesson') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">{{ trans('user/titles.list_lesson') }}</a>
+                        <a href="{{ URL::to('lesson') }}">{{ trans('lesson/labels.list_lesson') }}</a>
                     </li>
                     <li>
-                        <a href="#">{{ trans('user/titles.add_lesson') }}</a>
+                        <a href="{{ URL::to('lesson/create') }}">{{ trans('lesson/labels.add_lesson') }}</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -60,10 +60,7 @@
                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> {{ trans('user/titles.category') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">{{ trans('user/titles.list_category') }}</a>
-                    </li>
-                    <li>
-                        <a href="#">{{ trans('user/titles.add_category') }}</a>
+                        <a href="{{ URL::to('category') }}">{{ trans('category/labels.list_category') }}</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -72,10 +69,7 @@
                 <a href="#"><i class="fa fa-cube fa-fw"></i> {{ trans('user/titles.lesson') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">{{ trans('user/titles.list_lesson') }}</a>
-                    </li>
-                    <li>
-                        <a href="#">{{ trans('user/titles.add_lesson') }}</a>
+                        <a href="{{ URL::to('lesson') }}">{{ trans('lesson/labels.list_lesson') }}</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
