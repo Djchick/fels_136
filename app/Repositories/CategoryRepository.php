@@ -20,4 +20,8 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
             'name' => $data['name'],
         ]);
     }
+
+    public function lists($column_name,$id) {
+        return Category::lists($column_name,$id);
+    }
 }

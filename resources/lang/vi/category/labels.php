@@ -7,5 +7,6 @@ return [
     'field_delete' => 'Xóa',
     'field_edit' => 'Sửa',
     'name' => 'Tên khóa học',
-    'update_category' => 'cập nhật thông tin khóa học',
+    'page_edit_category' => 'Cập nhật khóa học',
+    'update_category' => 'Lưu',
 ];

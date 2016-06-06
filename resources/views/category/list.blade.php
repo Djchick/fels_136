@@ -27,8 +27,10 @@
                         <tr align="center">
                             <th>{{ trans('category/labels.field_id') }}</th>
                             <th>{{ trans('category/labels.field_name') }}</th>
+                            @if (Auth::user()->isAdmin())
                             <th>{{ trans('category/labels.field_delete') }}</th>
                             <th>{{ trans('category/labels.field_edit') }}</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -36,6 +38,7 @@
                             <tr class="even gradeC">
                                 <td>{{ $key + 1 }}</td>
                                 <td>{!! $category["name"] !!}</td>
+                                @if (Auth::user()->isAdmin())
                                 {!! Form::open(['route' => ['admin.category.destroy', $category['id']], 'method' => 'DELETE']) !!}
                                 <td class="center">
                                     {{ Form::button("<i class=\"fa fa-trash-o  fa-fw\"></i>", [
@@ -49,6 +52,7 @@
                                     <i class="fa fa-pencil fa-fw"></i>
                                     <a href="{!! route('admin.category.edit', $category['id']) !!}">{{ trans('category/labels.field_edit') }}</a>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

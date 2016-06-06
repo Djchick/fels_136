@@ -11,8 +11,6 @@
 |
 */
 
-
-
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 Route::get('register', ['as' => 'getRegister', 'uses' => 'Auth\AuthController@getRegister']);
 Route::post('register', 'Auth\AuthController@postRegister');
@@ -21,16 +19,20 @@ Route::get('login', ['as' => 'getLogin', 'uses' => 'Auth\AuthController@getLogin
 Route::post('login', ['as' => 'postLogin', 'uses' => 'Auth\AuthController@postLogin']);
 Route::get('auth/logout', 'Auth\AuthController@logout');
 
-Route::group(['prefix'=>'admin', 'middleware' => ['auth','admin']], function(){
-
+Route::group(['prefix'=>'admin', 'middleware' => ['auth','admin']], function() {
     Route::resource('user', 'UserController');
     Route::resource('category', 'CategoryController');
-   
+    Route::resource('lesson', 'LessonController');
 });
 
 Route::resource('category', 'CategoryController', ['only'  => [
     'index',
 ]]);
+
+Route::resource('lesson', 'LessonController', ['only'  => [
+    'index',
+]]);
+
 Route::resource('user', 'UserController', ['only'  => [
     'index',
 ]]);
