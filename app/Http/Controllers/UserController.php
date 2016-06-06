@@ -20,6 +20,9 @@ class UserController extends Controller
     /**
      * The user repository instance.
      */
+
+    protected $userRepository;
+
     public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;

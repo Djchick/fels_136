@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{ trans('lesson/labels.list_lesson') }}
+    {{ trans('lesson/labels.page_list_lesson') }}
 @stop
 @section('content')
 
@@ -27,18 +27,23 @@
                         <tr align="center">
                             <th>{{ trans('lesson/labels.field_id') }}</th>
                             <th>{{ trans('lesson/labels.field_name') }}</th>
-                            <th>{{ trans('lesson/labels.belongtocategory') }}</th>
+                            <th>{{ trans('lesson/labels.field_belong_category') }}</th>
+                            @if (Auth::user()->isAdmin())
                             <th>{{ trans('lesson/labels.field_delete') }}</th>
                             <th>{{ trans('lesson/labels.field_edit') }}</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($lessons as $key => $lesson)
-                            <tr class="even gradeC">
+                            <tr class="even gradeC" align="center">
                                 <td>{{ $key + 1 }}</td>
                                 <td>{!! $lesson["name"] !!}</td>
-                                <td>{!! $lesson["category_id"] !!}</td>
-                                {!! Form::open(['route' => ['lesson.destroy', $lesson['id']], 'method' => 'DELETE']) !!}
+                                <td>
+                                    {{ isset($lesson["category"]) ? $lesson["category"]["name"] : $lesson["category_id"] }}
+                                </td>
+                                @if (Auth::user()->isAdmin())
+                                {!! Form::open(['route' => ['admin.lesson.destroy', $lesson['id']], 'method' => 'DELETE']) !!}
                                 <td class="center">
                                     {{ Form::button("<i class=\"fa fa-trash-o  fa-fw\"></i>", [
                                         'class' => 'btn btn-danger',
@@ -49,8 +54,9 @@
                                 {!! Form::close() !!}
                                 <td class="center">
                                     <i class="fa fa-pencil fa-fw"></i>
-                                    <a href="{!! route('lesson.edit', $lesson['id']) !!}">{{ trans('lesson/labels.field_edit') }}</a>
+                                    <a href="{!! route('admin.lesson.edit', $lesson['id']) !!}">{{ trans('lesson/labels.field_edit') }}</a>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>

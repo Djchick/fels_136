@@ -12,6 +12,9 @@ class CategoryController extends Controller {
     /**
      * The category repository instance.
      */
+    
+    protected $categoryRepository;
+
     public function __construct(CategoryRepositoryInterface $categoryRepository) {
         $this->categoryRepository = $categoryRepository;
     }
@@ -35,7 +38,7 @@ class CategoryController extends Controller {
         }
         return redirect()->route('category.index')->withMessage(trans('category/messages.create_complete'));
     }
-
+    
     public function destroy($id) {
         $category = $this->categoryRepository->find($id);
         if($category && $category->delete()) {
