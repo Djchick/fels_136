@@ -42,10 +42,10 @@
                 <a href="#"><i class="fa fa-users fa-fw"></i> {{ trans('user/titles.word') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">{{ trans('user/titles.list_word') }}</a>
+                        <a href="{{ route('word.index') }}">{{ trans('user/titles.list_word') }}</a>
                     </li>
                     <li>
-                        <a href="#">{{ trans('user/titles.add_word') }}</a>
+                        <a href="{{ route('admin.word.create') }}">{{ trans('user/titles.add_word') }}</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -78,10 +78,7 @@
                 <a href="#"><i class="fa fa-users fa-fw"></i> {{ trans('user/titles.word') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">{{ trans('user/titles.list_word') }}</a>
-                    </li>
-                    <li>
-                        <a href="#">{{ trans('user/titles.add_word') }}</a>
+                        <a href="{{ route('word.index') }}">{{ trans('user/titles.list_word') }}</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
