@@ -7,6 +7,7 @@
 
     <title>@yield('title')</title>
     @include('layouts.css')
+    @include('layouts.js')
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default navbar-static-top nav-remove-top">
@@ -49,6 +50,6 @@
         </div>
     </nav>
     @yield('content')
-    @include('layouts.js')
+    
 </body>
 </html>

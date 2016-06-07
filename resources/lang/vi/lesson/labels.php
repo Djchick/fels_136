@@ -12,4 +12,5 @@ return [
     'update_lesson' => 'Lưu',
     'field_belong_category' => 'Thuộc khóa học',
     'category_id' => 'Khóa học',
+    'lesson_id' => 'Bài học',
 ];

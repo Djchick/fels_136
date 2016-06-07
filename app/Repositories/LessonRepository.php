@@ -18,7 +18,8 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
     public function create($data) {
         return Lesson::create($data);
     }
-    public function lists($column_name,$id) {
-        return Lesson::lists($column_name,$id);
+    
+    public function lists($column_name, $id) {
+        return Lesson::lists($column_name, $id)->toArray();
     }
 }

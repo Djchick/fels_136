@@ -11,6 +11,8 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\LessonRepository;
 use App\Repositories\Lesson\LessonRepositoryInterface;
+use App\Repositories\Word\WordRepositoryInterface;
+use App\Repositories\WordRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -34,5 +36,6 @@ class RepositoryServiceProvider extends ServiceProvider
         App::bind(UserRepositoryInterface::class, UserRepository::class);
         App::bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         App::bind(LessonRepositoryInterface::class, LessonRepository::class);
+        App::bind(WordRepositoryInterface::class, WordRepository::class);
     }
 }

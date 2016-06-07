@@ -23,6 +23,8 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth','admin']], function() {
     Route::resource('user', 'UserController');
     Route::resource('category', 'CategoryController');
     Route::resource('lesson', 'LessonController');
+    Route::resource('word', 'WordController');
+    Route::get('category-lesson', ['as' => 'user.getCategoryLesson', 'uses' => 'WordController@getLessons']);
 });
 
 Route::resource('category', 'CategoryController', ['only'  => [
@@ -30,6 +32,10 @@ Route::resource('category', 'CategoryController', ['only'  => [
 ]]);
 
 Route::resource('lesson', 'LessonController', ['only'  => [
+    'index',
+]]);
+
+Route::resource('word', 'WordController', ['only'  => [
     'index',
 ]]);
 
