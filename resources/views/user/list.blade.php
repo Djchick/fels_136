@@ -34,7 +34,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($user as $key => $item_user)
+                            @foreach ($users as $key => $item_user)
                             <tr class="even gradeC" align="center">
                                 <td>{{ $key + 1 }}</td>
                                 <td>{!! $item_user["name"] !!}</td>
@@ -62,6 +62,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    @include('pagination.default', ['paginator' => $users])
                 </div>
                 <!-- /.row -->
             </div>

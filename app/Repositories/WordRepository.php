@@ -19,7 +19,7 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface {
 
     public function get() {
         $pagination = config("common.pagination");
-        return Word::paginate($pagination);
+        return $this->model->paginate($pagination);
     }
 
     public function create($data) {
