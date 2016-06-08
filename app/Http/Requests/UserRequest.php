@@ -28,6 +28,7 @@ class UserRequest extends Request
             'name' => "required|max:{$rule['name_max']}",
             'email' => "required|email|unique:users,id, {$this->id}",
             'password' => "min:{$rule['password_min']}|confirmed",
+            'avatar' => "mimes:jpeg,png|image|max:{$rule['image_max_size']}",
         ];
     }
 }

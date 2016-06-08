@@ -31,6 +31,9 @@
                             <th>{{ trans('category/labels.field_delete') }}</th>
                             <th>{{ trans('category/labels.field_edit') }}</th>
                             @endif
+                            @if(Auth::user())
+                                <th>{{ trans('category/labels.field_view') }}</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -52,6 +55,12 @@
                                     <i class="fa fa-pencil fa-fw"></i>
                                     <a href="{!! route('admin.category.edit', $category['id']) !!}">{{ trans('category/labels.field_edit') }}</a>
                                 </td>
+                                @endif
+                                @if(Auth::user())
+                                    <td class="center">
+                                        <i class="fa fa-eye fa-fw"></i>
+                                        <a href="{!! route('category.show', $category['id']) !!}">{{ trans('category/labels.field_view') }}</a>
+                                    </td>
                                 @endif
                             </tr>
                         @endforeach

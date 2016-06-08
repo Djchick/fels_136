@@ -33,6 +33,8 @@
                                 @if (Auth::user()->isAdmin())
                                 <th>{{ trans('word/labels.field_delete') }}</th>
                                 <th>{{ trans('word/labels.field_edit') }}</th>
+                                @else
+                                    <th>{{ trans('word/labels.field_action') }}</th>
                                 @endif
                             </tr>
                             </thead>
@@ -61,6 +63,15 @@
                                         <i class="fa fa-pencil fa-fw"></i>
                                         <a href="{!! route('admin.word.edit', $word['id']) !!}">{{ trans('word/labels.field_edit') }}</a>
                                     </td>
+                                    @else
+                                        <td class="center">
+                                            @if(!$word->isLearned)
+                                                <i class="fa fa-hourglass-start fa-fw"></i>
+                                                <a href="{!! route('word.learning',['id'=>$word['id'],'action'=>'learning']) !!}">{{ trans('word/labels.learning') }}</a>
+                                            @else
+                                                {{trans('word/labels.learned')}}
+                                            @endif
+                                        </td>
                                     @endif
                                 </tr>
                             @endforeach

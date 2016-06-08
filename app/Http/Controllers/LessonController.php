@@ -44,7 +44,8 @@ class LessonController extends Controller {
             $lessons = $this->lessonRepository->get();
         }
         $this->viewData['lessons'] = $lessons;
-        return view('lesson.list', $this->viewData);  
+        return view('lesson.list', $this->viewData);
+        return view('word.list_lesson', $this->viewData);
     }
 
     public function store(LessonRequest $request) {

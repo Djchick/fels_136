@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class WordRequest extends Request {
+class WordAnswerRequest extends Request {
 
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +21,6 @@ class WordRequest extends Request {
      */
     public function rules() {
         return [
-            'content' => 'required',
-            'category_id' => 'required',
-            'lesson_id' => 'required',
             'word_answers.content.*' => 'required',
             'word_answers.correct' => 'required',
         ];

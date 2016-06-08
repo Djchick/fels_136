@@ -25,10 +25,28 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface {
     public function create($data) {
         $lessonWord['lesson_id'] = $data['lesson_id'];
         unset($data['lesson_id']);
+        $wordAnswersObject = null;
+        if(isset($data['word_answers'])) {
+            $wordAnswers = $data['word_answers'];
+            unset($data['word_answers']);
+            foreach($wordAnswers['content'] as $index => $answer) {
+                $correct = 0;
+                if(isset($wordAnswers['correct']) && $wordAnswers['correct'] == $index) {
+                    $correct = 1;
+                }
+                $wordAnswersObject[$index] = new WordAnswer(array(
+                    'content' => $answer,
+                    'correct' => $correct,
+                ));
+            }
+        }
         DB::beginTransaction();
         try {
-            $save = Word::create($data);
-            $save->lessonWord()->save(new LessonWord($lessonWord));
+            $save = $this->model->create($data);
+            if($wordAnswersObject) {
+                $save->lessonWord()->save(new LessonWord($lessonWord));
+                $save->wordAnswers()->saveMany($wordAnswersObject);
+            }
         } catch(\Exception $e) {
             DB::rollback();
             return false;
@@ -46,18 +64,35 @@ class WordRepository extends BaseRepository implements WordRepositoryInterface {
     }
 
     public function update($data) {
-        $word = Word::find($data['id']);
+        $word                    = $this->find($data['id']);
         $lessonWord['lesson_id'] = $data['lesson_id'];
         unset($data['lesson_id']);
-        DB::beginTransaction();
-        try {
-            $word->update($data) && $word->lessonWord()->update($lessonWord);
-            $word->push();
-        } catch(\Exception $e) {
-            DB::rollback();
-            return false;
+        $wordAnswers = null;
+        if(isset($data['word_answers'])) {
+            $wordAnswers = $data['word_answers'];
+            unset($data['word_answers']);
         }
-        DB::commit();
+        if($word && $wordAnswers) {
+            $wordAnswersObject = null;
+            foreach($wordAnswers['content'] as $index => $answer) {
+                $correct = 0;
+                if(isset($wordAnswers['correct']) && $wordAnswers['id'][$index] == $wordAnswers['correct']) {
+                    $correct = 1;
+                }
+                $word['wordAnswers'][$index]['content'] = $answer;
+                $word['wordAnswers'][$index]['correct'] = $correct;
+            }
+            DB::beginTransaction();
+            try {
+                $word->update($data);
+                $word->lessonWord()->update($lessonWord);
+                $word->push();
+            } catch(\Exception $e) {
+                DB::rollback();
+                return false;
+            }
+            DB::commit();
+        }
         return true;
     }
 }

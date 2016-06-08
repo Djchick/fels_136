@@ -54,7 +54,7 @@
         @else
         <ul class="nav" id="side-menu">
             <li>
-                <a href="#"><i class="fa fa-dashboard fa-fw"></i> {{ trans('user/titles.activity') }}</a>
+                <a href="{{ route('activity.index') }}"><i class="fa fa-dashboard fa-fw"></i> {{ trans('user/titles.activity') }}</a>
             </li>
             <li>
                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> {{ trans('user/titles.category') }}<span class="fa arrow"></span></a>

@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Auth;
 
 class Word extends Model {
 
@@ -31,5 +32,13 @@ class Word extends Model {
 
     public function wordAnswers() {
         return $this->hasMany(WordAnswer::class);
+    }
+
+    public function learnedWords() {
+        return $this->hasMany(LearnedWord::class);
+    }
+
+    public function isLearned() {
+        return $this->hasOne(LearnedWord::class)->where('user_id', Auth::user()->id);
     }
 }

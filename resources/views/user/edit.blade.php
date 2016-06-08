@@ -22,7 +22,7 @@
                     <!-- /.col-lg-12 -->
                     <div class="col-lg-7">
                         @include('errors.errors')
-                        {!! Form::open(['route' => ['admin.user.update', $editUser['id']], 'method' => 'PUT']) !!}
+                        {!! Form::open(['route' => ['admin.user.update', $editUser['id']], 'method' => 'PUT','files' => true]) !!}
                             <div class="form-group">
                                 {!! Form::label('name', trans('user/labels.name'), ['class' => 'required']) !!}
                                 {!! Form::text('name', old('name', isset($editUser) ? $editUser['name'] : null), ['class' => 'form-control', 'placeholder' => trans('user/placeholders.name')]) !!}
@@ -40,8 +40,11 @@
                                 {!! Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => trans('user/placeholders.confirm_password')]) !!}
                             </div>
                             <div class="form-group">
-                                <input type="radio" name="role" value="{{ trans('user/messages.role_user') }}"> {{ trans('user/labels.role_member') }}<br>
-                                <input type="radio" name="role" value="{{ trans('user/messages.role_admin') }}"> {{ trans('user/labels.role_admin') }}
+                                {!! Form::label('avatar',trans('user/labels.avatar')) !!}
+                                {!! Form::file('avatar', null) !!}
+                            </div>
+                            <div class="form-group">
+                                {{ Html::image($editUser->getUserAvatar(), $editUser->name) }}
                             </div>
                             {!! Form::submit(trans('user/labels.update_user'), ['class' => 'btn btn-default']) !!}
                         {!! Form::close() !!}

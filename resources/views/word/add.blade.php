@@ -33,6 +33,25 @@
                             {!! Form::label('lesson_id', trans('lesson/labels.lesson_id'), ['class' => 'required']) !!}
                             {{ Form::select('lesson_id',[],null,['class' => 'form-control lesson_id']) }}
                         </div>
+                        <div class="form-group">
+                            {{ trans('word/labels.answer_title') }}
+                        </div>
+                        @for ($i=0; $i < 3; $i++)
+                            <div class="col-lg-12">
+                                <div class="col-lg-7">
+                                    <div class="form-group">
+                                        {!! Form::label('word_answers[content]['.$i .']', trans('word/labels.word_answer_content'), ['class' => 'required']) !!}
+                                        {!! Form::text('word_answers[content]['.$i .']', null, ['class' => 'form-control', 'placeholder' => trans('word/placeholders.word_answer_content')]) !!}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        {!! Form::label('word_answers[correct]', trans('word/labels.word_answer_correct'), ['class' => 'required']) !!}
+                                        {!! Form::radio('word_answers[correct]', $i,false, ['class' => 'form-control','style'=>'box-shadow:none']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        @endfor
                         {!! Form::submit(trans('word/labels.add_word'), ['class' => 'btn btn-default']) !!}
                         {!! Form::close() !!}
                     </div>

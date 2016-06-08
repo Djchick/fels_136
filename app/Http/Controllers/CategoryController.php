@@ -67,9 +67,13 @@ class CategoryController extends Controller {
 
     public function edit($id) {
         $category = $this->categoryRepository->find($id);
-        $this->viewData = [
-            'category' => $category,
-        ];
+        $this->viewData['category'] = $category;
         return view('category.edit', $this->viewData);
+    }
+
+    public function show($id) {
+        $category = $this->categoryRepository->find($id);
+        $this->viewData ['category'] = $category;
+        return view('category.show', $this->viewData);
     }
 }

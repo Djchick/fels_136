@@ -32,4 +32,5 @@ return [
     'save' => 'Lưu',
     'new_password_confirmation' => 'Xác nhận mật khẩu mới',
     'home' => "Trang chủ",
+    'avatar' => 'Ảnh đại diện',
 ];

@@ -2,10 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Models\Relationship;
 use App\Repositories\BaseRepository;
 use Exception;
 use App\Models\User;
 use App\Repositories\User\UserRepositoryInterface;
+use DB;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface {
 
@@ -17,11 +19,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface {
     }
 
     public function create($data) {
-        return $this->model->create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => $data['password'],
-        ]);
+        if(isset($data['avatar'])) {
+            $uploadImage = $this->model->uploadImage($data['avatar']);
+            if($uploadImage) {
+                $data['avatar'] = $uploadImage;
+            }
+        }
+        $this->model->create($data);
+        return true;
     }
 
     public function changePassword($data) {

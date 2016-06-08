@@ -47,7 +47,7 @@ class UserController extends Controller
     }
 
     public function store(RegisterRequest $request) {
-        $input = $request->only(['name', 'email', 'password']);
+        $input = $request->only(['name', 'email', 'password', 'avatar']);
         $user = $this->userRepository->create($input);
         return redirect()->route('user.index')->withMessage(trans('user/messages.create_complete'));
     }
@@ -69,8 +69,17 @@ class UserController extends Controller
     public function update(UserRequest $request, $id) {
         $input = $request->only(['name', 'email', 'password']);
         $updateUser = $this->userRepository->find($id);
-        $updateUser->update($input);
-        return redirect()->route('admin.user.edit', $id)->withMessage(trans('user/messages.update_complete'));
+        if($updateUser) {
+            if($request->hasFile("avatar")) {
+                $image = $request->file("avatar");
+                if($imageName = $updateUser->uploadImage($image)) {
+                    $input['avatar'] = $imageName;
+                }
+            }
+            $updateUser->update($input);
+            return redirect()->route('admin.user.edit', $id)->withMessage(trans('user/messages.update_complete'));
+        }
+        return redirect()->route('user.getUpdateProfile')->withErrors(trans('user/messages.common_error'));
     }
 
     public function destroy($id) {
@@ -89,11 +98,17 @@ class UserController extends Controller
 
     public function postUpdateProfile(UserRequest $request) {
         $editUser = Auth::user();
-        $updateUser = $this->userRepository->find($editUser->id);
-        $update = $updateUser->update($request->only([
+        $input = $request->only([
             'name',
             'email',
-        ]));
+        ]);
+        if($request->hasFile("avatar")) {
+            $image = $request->file("avatar");
+            if($imageName = $editUser->uploadImage($image)) {
+                $input['avatar'] = $imageName;
+            }
+        }
+        $update = $editUser->update($input);
         if($update) {
             return redirect()->route('user.getUpdateProfile')->withMessage(trans('user/messages.update_complete'));
         }

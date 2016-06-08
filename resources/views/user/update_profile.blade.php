@@ -22,7 +22,7 @@
                     <!-- /.col-lg-12 -->
                     <div class="col-lg-7">
                         @include('errors.errors')
-                        {!! Form::open(['route' => ['user.postUpdateProfile'], 'method' => 'POST']) !!}
+                        {!! Form::open(['route' => ['user.postUpdateProfile'], 'method' => 'POST','files' => true]) !!}
                         <div class="form-group">
                             {!! Form::label('name', trans('user/labels.name'), ['class' => 'required']) !!}
                             {!! Form::text('name', old('name', isset($editUser) ? $editUser['name'] : null), ['class' => 'form-control', 'placeholder' => trans('user/placeholders.name')]) !!}
@@ -30,6 +30,13 @@
                         <div class="form-group">
                             {!! Form::label('email', trans('user/labels.email'), ['class' => 'required']) !!}
                             {!! Form::email('email', old('email', isset($editUser) ? $editUser['email'] : null), ['class' => 'form-control', 'placeholder' => trans('user/placeholders.email')]) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('avatar',trans('user/labels.avatar')) !!}
+                            {!! Form::file('avatar', null) !!}
+                        </div>
+                        <div class="form-group">
+                            {{ Html::image($editUser->getUserAvatar(), $editUser->name) }}
                         </div>
                         {!! Form::submit(trans('user/labels.update_user'), ['class' => 'btn btn-default']) !!}
                         {!! Form::close() !!}

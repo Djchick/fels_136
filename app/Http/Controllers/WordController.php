@@ -33,16 +33,27 @@ class WordController extends Controller {
 
     public function index(Request $request) {
         $words = $this->wordRepository->get();
-        $page = $request->get("page");
-        $lastPage = $words->lastPage();
-        if($page && $page > $lastPage) {
-            Paginator::currentPageResolver(function () use ($lastPage) {
-                return $lastPage;
-            });
-            $words = $this->wordRepository->get();
+        if($request->get("lesson_id")) {
+            $lessonId = $request->get('lesson_id');
+            $lesson = $this->lessonRepository->find($lessonId);
+            if($lesson) {
+                $this->viewData['lesson'] = $lesson;
+                return view('word.learning', $this->viewData);
+            } else {
+                return redirect()->route('lesson.index')->withErrors(trans('lesson/messages.common_error'));
+            }
+        } else {
+            $page = $request->get("page");
+            $lastPage = $words->lastPage();
+            if($page && $page > $lastPage) {
+                Paginator::currentPageResolver(function () use ($lastPage) {
+                    return $lastPage;
+                });
+                $words = $this->wordRepository->get();
+            }
+            $this->viewData['words'] = $words;
+            return view('word.list', $this->viewData);
         }
-        $this->viewData['words'] = $words;
-        return view('word.list', $this->viewData);
     }
 
     public function store(WordRequest $request) {
@@ -94,16 +105,20 @@ class WordController extends Controller {
         $word = $this->wordRepository->find($id);
         if($word && $word->delete()) {
             $word->lessonWord()->delete();
-            return redirect()->route('word.index')->withMessage(trans('lesson/messages.delete_complete'));
+            return redirect()->route('word.index')->withMessage(trans('word/messages.delete_complete'));
         }
-        return redirect()->route('word.index')->withErrors(trans('lesson/messages.common_error'));
+        return redirect()->route('word.index')->withErrors(trans('word/messages.common_error'));
     }
 
-    public function delete($id) {
-        $request = $this->getRouter()->getCurrentRequest();
-        if($request->ajax()) {
-            $word = $this->wordRepository->delete(['id' => $id]);
-            return redirect()->route('word.index')->withErrors(trans('word/messages.delete_complete'));
+    public function show($id) {
+        $request = request();
+        if($request->get("action") && $request->get("action") == "learning") {
+            $word = $this->wordRepository->find($id);
+            if($word && !$word->isLearned) {
+                $this->viewData['word'] = $word;
+                return view('word.learning_word', $this->viewData);
+            }
+            return redirect()->route('word.index')->withErrors(trans('word/messages.common_error'));
         }
         return redirect()->route('word.index')->withErrors(trans('word/messages.common_error'));
     }

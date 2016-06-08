@@ -21,7 +21,7 @@
                     </div>
                     <!-- /.col-lg-12 -->
                     <div class="col-lg-7">
-                        {!! Form::open(['route' => 'admin.user.store', 'method' => 'POST']) !!}
+                        {!! Form::open(['route' => 'admin.user.store', 'method' => 'POST','files' => true]) !!}
                             @include('errors.errors')
                             <div class="form-group">
                                 {!! Form::label('name', trans('user/labels.name'), ['class' => 'required']) !!}
@@ -38,6 +38,10 @@
                             <div class="form-group">
                                 {!! Form::label('confirm_password', trans('user/labels.confirm_password'), ['class' => 'required']) !!}
                                 {!! Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => trans('user/placeholders.confirm_password')]) !!}
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('avatar',trans('user/labels.avatar')) !!}
+                                {!! Form::file('avatar', null) !!}
                             </div>
                             {!! Form::submit(trans('user/labels.add_user'), ['class' => 'btn btn-default']) !!}
                         {!! Form::close() !!}
