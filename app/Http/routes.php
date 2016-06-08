@@ -27,24 +27,33 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth','admin']], function() {
     Route::get('category-lesson', ['as' => 'user.getCategoryLesson', 'uses' => 'WordController@getLessons']);
 });
 
-Route::resource('category', 'CategoryController', ['only'  => [
-    'index',
-]]);
+Route::group([ 'middleware' => ['auth']], function() {
 
-Route::resource('lesson', 'LessonController', ['only'  => [
-    'index',
-]]);
+    Route::resource('category', 'CategoryController', ['only'  => [
+        'index',
+        'show'
+    ]]);
 
-Route::resource('word', 'WordController', ['only'  => [
-    'index',
-]]);
+    Route::resource('wordAnswer', 'WordAnswerController', ['only'  => [
+        'update',
+    ]]);
 
-Route::resource('user', 'UserController', ['only'  => [
-    'index',
-]]);
+    Route::resource('lesson', 'LessonController', ['only'  => [
+        'index',
+    ]]);
 
-Route::get('user-info', ['as' => 'user.info', 'uses' => 'HomeController@getInfo']);
-Route::get('user-profile', ['as' => 'user.getUpdateProfile', 'uses' => 'UserController@getUpdateProfile']);
-Route::post('user-profile', ['as' => 'user.postUpdateProfile', 'uses' => 'UserController@postUpdateProfile']);
-Route::get('change-password', ['as' => 'user.getChangePassword', 'uses' => 'UserController@getChangePassword']);
-Route::post('change-password', ['as' => 'user.postChangePassword', 'uses' => 'UserController@postChangePassword']);
+    Route::resource('word', 'WordController', ['only'  => [
+        'index',
+    ]]);
+
+    Route::resource('user', 'UserController', ['only'  => [
+        'index',
+    ]]);
+    
+    Route::get('learning-lesson-{id}', ['as' => 'lesson.startLearning', 'uses' => 'LessonController@startLearning']);
+    Route::get('user-info', ['as' => 'user.info', 'uses' => 'HomeController@getInfo']);
+    Route::get('user-profile', ['as' => 'user.getUpdateProfile', 'uses' => 'UserController@getUpdateProfile']);
+    Route::post('user-profile', ['as' => 'user.postUpdateProfile', 'uses' => 'UserController@postUpdateProfile']);
+    Route::get('change-password', ['as' => 'user.getChangePassword', 'uses' => 'UserController@getChangePassword']);
+    Route::post('change-password', ['as' => 'user.postChangePassword', 'uses' => 'UserController@postChangePassword']);
+});

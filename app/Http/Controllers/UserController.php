@@ -29,8 +29,17 @@ class UserController extends Controller
     }
 
     public function index() {
-        $user = $this->userRepository->all();
-        $this->viewData['user'] = $user;
+        $request = request();
+        $users = $this->userRepository->get();
+        $page = $request->get("page");
+        $lastPage = $users->lastPage();
+        if($page && $page > $lastPage) {
+            Paginator::currentPageResolver(function () use ($lastPage) {
+                return $lastPage;
+            });
+            $users = $this->userRepository->get();
+        }
+        $this->viewData['users'] = $users;
         return view('user.list', $this->viewData);
     }
 

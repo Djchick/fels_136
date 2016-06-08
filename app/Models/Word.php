@@ -32,4 +32,8 @@ class Word extends Model {
     public function wordAnswers() {
         return $this->hasMany(WordAnswer::class);
     }
+    
+    public function learnedWords() {
+        return $this->hasMany(LearnedWord::class);
+    }
 }

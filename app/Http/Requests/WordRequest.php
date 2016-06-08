@@ -25,6 +25,7 @@ class WordRequest extends Request {
             'content' => 'required',
             'category_id' => 'required',
             'lesson_id' => 'required',
+            'word_answers.content.*' => 'required',
         ];
     }
 }

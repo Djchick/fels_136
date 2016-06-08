@@ -12,6 +12,7 @@ use Validator;
 use Session;
 use App\Http\Requests;
 use App\Http\Requests\LessonRequest;
+use Illuminate\Pagination\Paginator;
 
 class LessonController extends Controller {
 
@@ -28,9 +29,23 @@ class LessonController extends Controller {
     }
 
     public function index() {
-        $lessons = $this->lessonRepository->all();
+        $request = request();
+        if($request->ajax() && $request->get("category_id")) {
+            $categoryId = $request->get('category_id');
+            $lessons = $this->categoryRepository->getCategoryLesson($categoryId);
+            return response()->json($lessons);
+        }
+        $lessons = $this->lessonRepository->get();
+        $page = $request->get("page");
+        $lastPage = $lessons->lastPage();
+        if($page && $page > $lastPage) {
+            Paginator::currentPageResolver(function () use ($lastPage) {
+                return $lastPage;
+            });
+            $lessons = $this->lessonRepository->get();
+        }
         $this->viewData['lessons'] = $lessons;
-        return view('lesson.list', $this->viewData);
+        return view('lesson.list', $this->viewData);   
     }
 
     public function store(LessonRequest $request) {

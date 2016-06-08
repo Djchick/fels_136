@@ -16,10 +16,15 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
     }
 
     public function create($data) {
-        return Lesson::create($data);
+        return $this->model->create($data);
+    }
+
+    public function get() {
+        $pagination = config("common.pagination");
+        return $this->model->paginate($pagination);
     }
     
     public function lists($column_name, $id) {
-        return Lesson::lists($column_name, $id)->toArray();
+        return $this->model->lists($column_name, $id)->toArray();
     }
 }

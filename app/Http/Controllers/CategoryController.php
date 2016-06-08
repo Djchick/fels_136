@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Http\Requests\CategoryRequest;
+use Illuminate\Pagination\Paginator;
 
 class CategoryController extends Controller {
 
@@ -20,7 +21,16 @@ class CategoryController extends Controller {
     }
 
     public function index() {
-        $categories = $this->categoryRepository->all();
+        $request = request();
+        $categories = $this->categoryRepository->get();
+        $page = $request->get("page");
+        $lastPage = $categories->lastPage();
+        if($page && $page > $lastPage) {
+            Paginator::currentPageResolver(function () use ($lastPage) {
+                return $lastPage;
+            });
+            $categories = $this->categoryRepository->get();
+        }
         $this->viewData['categories'] = $categories;
         return view('category.list', $this->viewData);
     }
@@ -62,5 +72,13 @@ class CategoryController extends Controller {
             'category' => $category,
         ];
         return view('category.edit', $this->viewData);
+    }
+
+    public function show($id) {
+        $category = $this->categoryRepository->find($id);
+        $this->viewData = [
+            'category' => $category,
+        ];
+        return view('category.show', $this->viewData);
     }
 }

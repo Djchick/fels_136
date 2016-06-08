@@ -19,6 +19,11 @@ class WordController extends Controller {
     /**
      * The user repository instance.
      */
+    
+    protected $wordRepository;
+    protected $categoryRepository;
+    protected $lessonRepository;
+
     public function __construct(WordRepositoryInterface $wordRepository,
             CategoryRepositoryInterface $categoryRepository, LessonRepositoryInterface $lessonRepository) {
         $this->wordRepository = $wordRepository;
@@ -27,9 +32,9 @@ class WordController extends Controller {
     }
 
     public function index() {
-        $currentRequest = $this->getRouter()->getCurrentRequest();
+        $request = request();
         $words = $this->wordRepository->get();
-        $page = $currentRequest->get("page");
+        $page = $request->get("page");
         $lastPage = $words->lastPage();
         if($page && $page > $lastPage) {
             Paginator::currentPageResolver(function () use ($lastPage) {
@@ -47,7 +52,7 @@ class WordController extends Controller {
             'category_id',
             'lesson_id',
             'word_answers',
-        ]);
+        ]);     
         $this->wordRepository->create($input);
         return redirect()->route('word.index')->withMessage(trans('word/messages.create_complete'));
     }
@@ -57,20 +62,6 @@ class WordController extends Controller {
             'categories' => $this->categoryRepository->lists("name", "id"),
         ];
         return view('word.add', $this->viewData);
-    }
-
-    public function getLessons(Request $request) {
-        if($request->ajax()) {
-            $categoryId = $request->get('category_id');
-            $category = $this->categoryRepository->find($categoryId);
-            $lessonData = [];
-            if($category) {
-                foreach($category->lessons as $lesson) {
-                    $lessonData[$lesson->id] = $lesson->name;
-                }
-            }
-            echo json_encode($lessonData);
-        }
     }
 
     public function edit($id) {
@@ -113,11 +104,8 @@ class WordController extends Controller {
         $request = $this->getRouter()->getCurrentRequest();
         if($request->ajax()) {
             $word = $this->wordRepository->delete(['id' => $id]);
-            if($word) {
-                $request->session()->flash('message', trans('word/messages.delete_complete'));
-            } else {
-                $request->session()->flash('error', trans('word/messages.common_error'));
-            }
+            return redirect()->route('word.index')->withMessage(trans('word/messages.delete_complete'));
         }
+        return redirect()->route('word.index')->withErrors(trans('word/messages.common_error'));
     }
 }

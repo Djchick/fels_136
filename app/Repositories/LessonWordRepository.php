@@ -16,6 +16,6 @@ class LessonWordRepository extends BaseRepository implements LessonWordRepositor
     }
 
     public function create($data) {
-        return LessonWord::create($data);
+        return $this->model->create($data);
     }
 }

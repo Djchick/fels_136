@@ -17,7 +17,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface {
     }
 
     public function create($data) {
-        return User::create([
+        return $this->model->create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
@@ -25,11 +25,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface {
     }
 
     public function changePassword($data) {
-        $user = User::find($data['userId']);
+        $user = $this->find($data['userId']);
         if(! $user) {
            return false;
         }
         $user->setPasswordAttribute($data['password']);
         return $user->save();
+    }
+
+    public function get() {
+        $pagination = config("common.pagination");
+        return $this->model->paginate($pagination);
     }
 }

@@ -23,4 +23,8 @@ class Lesson extends Model
     public function words() {
         return $this->hasMany(Word::class);
     }
+
+    public function lessonWords() {
+       return $this->hasMany(LessonWord::class);
+    }   
 }

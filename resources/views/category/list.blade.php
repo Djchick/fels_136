@@ -28,8 +28,11 @@
                             <th>{{ trans('category/labels.field_id') }}</th>
                             <th>{{ trans('category/labels.field_name') }}</th>
                             @if (Auth::user()->isAdmin())
-                            <th>{{ trans('category/labels.field_delete') }}</th>
-                            <th>{{ trans('category/labels.field_edit') }}</th>
+                                <th>{{ trans('category/labels.field_delete') }}</th>
+                                <th>{{ trans('category/labels.field_edit') }}</th>
+                            @endif
+                            @if(Auth::user())
+                                <th>{{ trans('category/labels.field_view') }}</th>
                             @endif
                         </tr>
                         </thead>
@@ -39,24 +42,31 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{!! $category["name"] !!}</td>
                                 @if (Auth::user()->isAdmin())
-                                {!! Form::open(['route' => ['admin.category.destroy', $category['id']], 'method' => 'DELETE']) !!}
-                                <td class="center">
-                                    {{ Form::button("<i class=\"fa fa-trash-o  fa-fw\"></i>", [
-                                        'class' => 'btn btn-danger',
-                                        'onclick' => "return confirm('" . trans('category/messages.confirm_delete') . "')",
-                                        'type' => 'submit',
-                                    ]) }}
-                                </td>
-                                {!! Form::close() !!}
-                                <td class="center">
-                                    <i class="fa fa-pencil fa-fw"></i>
-                                    <a href="{!! route('admin.category.edit', $category['id']) !!}">{{ trans('category/labels.field_edit') }}</a>
-                                </td>
+                                    {!! Form::open(['route' => ['admin.category.destroy', $category['id']], 'method' => 'DELETE']) !!}
+                                    <td class="center">
+                                        {{ Form::button("<i class=\"fa fa-trash-o  fa-fw\"></i>", [
+                                            'class' => 'btn btn-danger',
+                                            'onclick' => "return confirm('" . trans('category/messages.confirm_delete') . "')",
+                                            'type' => 'submit',
+                                        ]) }}
+                                    </td>
+                                    {!! Form::close() !!}
+                                    <td class="center">
+                                        <i class="fa fa-pencil fa-fw"></i>
+                                        <a href="{!! route('admin.category.edit', $category['id']) !!}">{{ trans('category/labels.field_edit') }}</a>
+                                    </td>
+                                @endif
+                                @if(Auth::user())
+                                    <td class="center">
+                                        <i class="fa fa-eye fa-fw"></i>
+                                        <a href="{!! route('category.show', $category['id']) !!}">{{ trans('category/labels.field_view') }}</a>
+                                    </td>
                                 @endif
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                    @include('pagination.default', ['paginator' => $categories])
                 </div>
                 <!-- /.row -->
             </div>

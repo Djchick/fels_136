@@ -14,6 +14,7 @@ return [
             'name_max' => 100,
         ],
     ],
+    'pagination' => 3,
     'lesson' => [
         'rule' => [
             'name_max' => 100,
