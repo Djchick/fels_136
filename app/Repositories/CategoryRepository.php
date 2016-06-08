@@ -27,11 +27,11 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     }
 
     public function lists($column_name,$id) {
-        return $this->model->lists($column_name,$id);
+        return $this->model->lists($column_name, $id);
     }
 
     public function getCategoryLesson($categoryId) {
-        $category   = $this->find($categoryId);
+        $category = $this->find($categoryId);
         $lessonData = [];
         if($category) {
             foreach($category->lessons as $lesson) {
@@ -39,5 +39,6 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
             }
         }
         return $lessonData;
-    }
+   }
+
 }

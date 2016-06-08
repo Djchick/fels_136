@@ -28,8 +28,7 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function index() {
-        $request = request();
+    public function index(Request $request) {
         $users = $this->userRepository->get();
         $page = $request->get("page");
         $lastPage = $users->lastPage();
@@ -61,7 +60,7 @@ class UserController extends Controller
         $editUser = $this->userRepository->find($id);
         $currentUser = Auth::user();
         $this->viewData = [
-            'editUser'    => $editUser, 
+            'editUser' => $editUser, 
             'currentUser' => $currentUser,
         ];
         return view('user.edit', $this->viewData);
@@ -89,9 +88,9 @@ class UserController extends Controller
     }
 
     public function postUpdateProfile(UserRequest $request) {
-        $editUser   = Auth::user();
+        $editUser = Auth::user();
         $updateUser = $this->userRepository->find($editUser->id);
-        $update     = $updateUser->update($request->only([
+        $update = $updateUser->update($request->only([
             'name',
             'email',
         ]));
@@ -108,7 +107,7 @@ class UserController extends Controller
     public function postChangePassword(ChangePasswordRequest $request) {
         $user = Auth::user();
         $update = $this->userRepository->changePassword([
-            'userId'   => $user->id,
+            'userId' => $user->id,
             'password' => $request->get("new_password"),
         ]);
         if(! $update) {

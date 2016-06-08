@@ -19,11 +19,11 @@ class WordController extends Controller {
     /**
      * The user repository instance.
      */
-    
+
     protected $wordRepository;
     protected $categoryRepository;
     protected $lessonRepository;
-
+    
     public function __construct(WordRepositoryInterface $wordRepository,
             CategoryRepositoryInterface $categoryRepository, LessonRepositoryInterface $lessonRepository) {
         $this->wordRepository = $wordRepository;
@@ -31,8 +31,7 @@ class WordController extends Controller {
         $this->lessonRepository = $lessonRepository;
     }
 
-    public function index() {
-        $request = request();
+    public function index(Request $request) {
         $words = $this->wordRepository->get();
         $page = $request->get("page");
         $lastPage = $words->lastPage();

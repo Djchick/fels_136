@@ -80,9 +80,6 @@
                         lesson.focus();
                         $.each(data, function(key, value) {
                             lesson.append($("<option></option>").attr("value", key).text(value));
-                            if(key == lesson.data("current")) {
-                                lesson.val(key);
-                            }
                         });
                     }
                 });

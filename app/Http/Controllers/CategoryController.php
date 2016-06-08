@@ -20,8 +20,7 @@ class CategoryController extends Controller {
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function index() {
-        $request = request();
+    public function index(Request $request) {
         $categories = $this->categoryRepository->get();
         $page = $request->get("page");
         $lastPage = $categories->lastPage();

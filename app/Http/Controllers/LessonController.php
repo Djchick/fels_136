@@ -24,12 +24,11 @@ class LessonController extends Controller {
     protected $categoryRepository;
 
     public function __construct(LessonRepositoryInterface $lessonRepository, CategoryRepositoryInterface $categoryRepository) {
-        $this->lessonRepository   = $lessonRepository;
+        $this->lessonRepository = $lessonRepository;
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function index() {
-        $request = request();
+    public function index(Request $request) {
         if($request->ajax() && $request->get("category_id")) {
             $categoryId = $request->get('category_id');
             $lessons = $this->categoryRepository->getCategoryLesson($categoryId);
@@ -45,7 +44,7 @@ class LessonController extends Controller {
             $lessons = $this->lessonRepository->get();
         }
         $this->viewData['lessons'] = $lessons;
-        return view('lesson.list', $this->viewData);   
+        return view('lesson.list', $this->viewData);
     }
 
     public function store(LessonRequest $request) {
@@ -67,7 +66,7 @@ class LessonController extends Controller {
     public function edit($id) {
         $lesson = $this->lessonRepository->find($id);
         $this->viewData = [
-            'lesson'     => $lesson,
+            'lesson' => $lesson,
             'categories' => $this->categoryRepository->lists('name', 'id'),
         ];
         return view('lesson.edit', $this->viewData);
