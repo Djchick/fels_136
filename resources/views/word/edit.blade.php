@@ -48,7 +48,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             var lesson = $('.lesson_id');
-            var getLesson = "{!! route('user.getCategoryLesson') !!}";
+            var getLesson = "{!! route('lesson.index') !!}";
 
             function getCategoryLessons(categoryId) {
                 $.ajax({
@@ -58,11 +58,8 @@
                     success : function(data) {
                         lesson.children("option").remove();
                         lesson.focus();
-                        $.each(JSON.parse(data), function(key, value) {
+                        $.each(data, function(key, value) {
                             lesson.append($("<option></option>").attr("value", key).text(value));
-                            if(key == lesson.data("current")) {
-                                lesson.val(key);
-                            }
                         });
                     }
                 });

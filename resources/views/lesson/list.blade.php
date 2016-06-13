@@ -61,6 +61,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('pagination.default', ['paginator' => $lessons])
                 </div>
                 <!-- /.row -->
             </div>
