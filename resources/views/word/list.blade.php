@@ -30,8 +30,10 @@
                                 <th>{{ trans('word/labels.field_content') }}</th>
                                 <th>{{ trans('word/labels.field_category') }}</th>
                                 <th>{{ trans('word/labels.field_lesson') }}</th>
+                                @if (Auth::user()->isAdmin())
                                 <th>{{ trans('word/labels.field_delete') }}</th>
                                 <th>{{ trans('word/labels.field_edit') }}</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -45,6 +47,7 @@
                                     <td>
                                         {{ isset($word["lessonWord"]) ? $word["lessonWord"]['lesson']['name'] : "" }}
                                     </td>
+                                    @if (Auth::user()->isAdmin())
                                     {!! Form::open(['route' => ['admin.word.destroy', $word['id']], 'method' => 'DELETE']) !!}
                                     <td class="center">
                                         {{ Form::button("<i class=\"fa fa-trash-o  fa-fw\"></i>", [
@@ -58,10 +61,12 @@
                                         <i class="fa fa-pencil fa-fw"></i>
                                         <a href="{!! route('admin.word.edit', $word['id']) !!}">{{ trans('word/labels.field_edit') }}</a>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        @include('pagination.default', ['paginator' => $words])
                     </div>
                 </div>
                 <!-- /.row -->

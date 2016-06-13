@@ -12,7 +12,7 @@ return [
     | you want to customize your views to better match your application.
     |
     */
-
+    'total'    => 'Tổng số :total kết quả ',
     'previous' => '&laquo; Trang sau',
     'next'     => 'Trang trước &raquo;',
 

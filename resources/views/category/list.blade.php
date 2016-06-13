@@ -57,6 +57,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @include('pagination.default', ['paginator' => $categories])
                 </div>
                 <!-- /.row -->
             </div>
